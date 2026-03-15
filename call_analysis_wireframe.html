@@ -1,0 +1,210 @@
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans); }
+.nav { display: flex; gap: 8px; flex-wrap: wrap; padding: 1rem 0 1.5rem; border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 1.5rem; }
+.nav button { font-size: 13px; padding: 6px 14px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); background: transparent; color: var(--color-text-secondary); cursor: pointer; transition: all 0.15s; }
+.nav button.active { background: var(--color-background-secondary); color: var(--color-text-primary); border-color: var(--color-border-primary); font-weight: 500; }
+.screen { display: none; }
+.screen.active { display: block; }
+
+.screen-label { font-size: 11px; color: var(--color-text-tertiary); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1rem; }
+
+.wire-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1.25rem; margin-bottom: 1rem; }
+.wire-input { height: 36px; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); background: var(--color-background-secondary); width: 100%; margin-bottom: 10px; display: flex; align-items: center; padding: 0 12px; font-size: 13px; color: var(--color-text-secondary); }
+.wire-btn { height: 36px; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); background: var(--color-background-secondary); padding: 0 16px; font-size: 13px; color: var(--color-text-primary); cursor: pointer; display: inline-flex; align-items: center; }
+.wire-btn-primary { background: var(--color-text-primary); color: var(--color-background-primary); border-color: transparent; }
+.row { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; }
+.label { font-size: 13px; color: var(--color-text-secondary); white-space: nowrap; }
+.divider { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 1rem 0; }
+.tag { display: inline-block; font-size: 12px; padding: 3px 10px; border-radius: 99px; border: 0.5px solid var(--color-border-secondary); color: var(--color-text-secondary); margin: 3px; background: var(--color-background-secondary); }
+.table-row { display: grid; grid-template-columns: 2fr 1.2fr 1fr 1fr 0.8fr; gap: 8px; padding: 10px 0; border-bottom: 0.5px solid var(--color-border-tertiary); align-items: center; font-size: 13px; }
+.table-head { font-size: 11px; color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 0.06em; padding: 0 0 8px; border-bottom: 0.5px solid var(--color-border-secondary); display: grid; grid-template-columns: 2fr 1.2fr 1fr 1fr 0.8fr; gap: 8px; }
+.status-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+.dot-done { background: #639922; }
+.dot-proc { background: #BA7517; }
+.dot-queue { background: #888780; }
+.upload-zone { border: 1.5px dashed var(--color-border-secondary); border-radius: var(--border-radius-lg); padding: 2.5rem 1.5rem; text-align: center; background: var(--color-background-secondary); margin-bottom: 1rem; }
+.upload-icon { width: 36px; height: 36px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); background: var(--color-background-primary); margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; }
+.timeline { position: relative; padding-left: 16px; }
+.tl-item { padding: 8px 0 8px 12px; border-left: 1.5px solid var(--color-border-secondary); font-size: 13px; }
+.tl-time { font-size: 11px; color: var(--color-text-tertiary); margin-bottom: 2px; }
+.tl-op { color: var(--color-text-primary); }
+.tl-cl { color: var(--color-text-secondary); }
+.replica { padding: 8px 12px; border-radius: var(--border-radius-md); font-size: 13px; margin-bottom: 8px; max-width: 78%; }
+.replica-op { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); }
+.replica-cl { background: var(--color-background-primary); border: 0.5px solid var(--color-border-secondary); margin-left: auto; }
+.replica-label { font-size: 11px; color: var(--color-text-tertiary); margin-bottom: 3px; }
+.metric { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 1rem; flex: 1; }
+.metric-val { font-size: 22px; font-weight: 500; color: var(--color-text-primary); }
+.metric-lbl { font-size: 12px; color: var(--color-text-secondary); margin-top: 3px; }
+.player { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 10px 14px; display: flex; align-items: center; gap: 12px; margin-bottom: 1rem; }
+.play-btn { width: 28px; height: 28px; border-radius: 50%; border: 0.5px solid var(--color-border-secondary); background: var(--color-background-primary); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.progress { flex: 1; height: 3px; background: var(--color-border-secondary); border-radius: 2px; position: relative; }
+.progress-fill { width: 35%; height: 100%; background: var(--color-text-primary); border-radius: 2px; }
+.time-lbl { font-size: 12px; color: var(--color-text-tertiary); white-space: nowrap; }
+.section-title { font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 10px; }
+</style>
+
+<div class="nav">
+  <button class="active" onclick="show('login')">1. Вход / регистрация</button>
+  <button onclick="show('list')">2. Список звонков</button>
+  <button onclick="show('upload')">3. Загрузка аудио</button>
+  <button onclick="show('card')">4. Карточка звонка</button>
+</div>
+
+<div id="login" class="screen active">
+  <div class="screen-label">Экран 1 — Вход / регистрация</div>
+  <div style="max-width: 360px; margin: 0 auto;">
+    <div class="wire-card">
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <div style="font-size: 16px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 4px;">Платформа анализа звонков</div>
+        <div style="font-size: 13px; color: var(--color-text-secondary);">Войдите или создайте аккаунт</div>
+      </div>
+      <div style="display: flex; gap: 0; margin-bottom: 1.25rem; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); overflow: hidden;">
+        <div style="flex: 1; text-align: center; padding: 8px; background: var(--color-text-primary); color: var(--color-background-primary); font-size: 13px; font-weight: 500;">Войти</div>
+        <div style="flex: 1; text-align: center; padding: 8px; font-size: 13px; color: var(--color-text-secondary);">Регистрация</div>
+      </div>
+      <div class="wire-input">Логин</div>
+      <div class="wire-input">Пароль</div>
+      <button class="wire-btn wire-btn-primary" style="width: 100%; justify-content: center; margin-top: 4px;">Войти</button>
+    </div>
+  </div>
+</div>
+
+<div id="list" class="screen">
+  <div class="screen-label">Экран 2 — Список звонков</div>
+  <div class="wire-card">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+      <div style="font-size: 15px; font-weight: 500; color: var(--color-text-primary);">Мои звонки</div>
+      <button class="wire-btn wire-btn-primary" onclick="show('upload')">+ Загрузить</button>
+    </div>
+    <div class="row" style="margin-bottom: 1rem;">
+      <div class="wire-input" style="flex: 1; margin: 0;">Поиск по имени файла...</div>
+      <div class="wire-input" style="width: 140px; margin: 0;">Дата ▾</div>
+      <div class="wire-input" style="width: 140px; margin: 0;">Тема ▾</div>
+    </div>
+    <div class="table-head">
+      <span>Файл</span><span>Дата</span><span>Длительность</span><span>Тема</span><span>Статус</span>
+    </div>
+    <div class="table-row" style="cursor: pointer;" onclick="show('card')">
+      <span style="color: var(--color-text-info, #185FA5);">zvonok_2025_01_15.mp3</span>
+      <span style="color: var(--color-text-secondary);">15.01.2025</span>
+      <span style="color: var(--color-text-secondary);">4:32</span>
+      <span><span class="tag">Возврат</span></span>
+      <span><span class="status-dot dot-done"></span><span style="font-size: 12px; color: var(--color-text-secondary);">Готово</span></span>
+    </div>
+    <div class="table-row">
+      <span style="color: var(--color-text-secondary);">call_operator_ivanov.mp3</span>
+      <span style="color: var(--color-text-secondary);">14.01.2025</span>
+      <span style="color: var(--color-text-secondary);">7:14</span>
+      <span><span class="tag">Жалоба</span></span>
+      <span><span class="status-dot dot-proc"></span><span style="font-size: 12px; color: var(--color-text-secondary);">Обработка</span></span>
+    </div>
+    <div class="table-row">
+      <span style="color: var(--color-text-secondary);">record_130124.mp3</span>
+      <span style="color: var(--color-text-secondary);">13.01.2025</span>
+      <span style="color: var(--color-text-secondary);">2:58</span>
+      <span><span class="tag">Консультация</span></span>
+      <span><span class="status-dot dot-queue"></span><span style="font-size: 12px; color: var(--color-text-secondary);">В очереди</span></span>
+    </div>
+  </div>
+</div>
+
+<div id="upload" class="screen">
+  <div class="screen-label">Экран 3 — Загрузка аудио</div>
+  <div style="max-width: 520px;">
+    <div class="wire-card">
+      <div style="font-size: 15px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 1rem;">Новый звонок</div>
+      <div class="upload-zone">
+        <div class="upload-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v8M5 5l3-3 3 3M3 12h10" stroke="var(--color-text-secondary)" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </div>
+        <div style="font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 4px;">Перетащите аудиофайл сюда</div>
+        <div style="font-size: 12px; color: var(--color-text-secondary); margin-bottom: 12px;">MP3, WAV, M4A — до 200 МБ</div>
+        <button class="wire-btn">Выбрать файл</button>
+      </div>
+      <hr class="divider">
+      <div class="row">
+        <span class="label">Язык записи</span>
+        <div class="wire-input" style="flex: 1; margin: 0;">Русский ▾</div>
+      </div>
+      <div class="row">
+        <span class="label">Имя оператора</span>
+        <div class="wire-input" style="flex: 1; margin: 0;">Введите имя...</div>
+      </div>
+      <hr class="divider">
+      <div style="display: flex; justify-content: flex-end; gap: 8px;">
+        <button class="wire-btn" onclick="show('list')">Отмена</button>
+        <button class="wire-btn wire-btn-primary">Запустить анализ</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="card" class="screen">
+  <div class="screen-label">Экран 4 — Карточка звонка</div>
+  <div class="wire-card">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+      <div>
+        <div style="font-size: 15px; font-weight: 500; color: var(--color-text-primary);">zvonok_2025_01_15.mp3</div>
+        <div style="font-size: 12px; color: var(--color-text-secondary); margin-top: 2px;">15 января 2025 · 4:32 · Оператор: Иванов</div>
+      </div>
+      <button class="wire-btn" onclick="show('list')">← Назад</button>
+    </div>
+    <div style="display: flex; gap: 10px; margin-bottom: 1.25rem;">
+      <div class="metric"><div class="metric-val">4:32</div><div class="metric-lbl">Длительность</div></div>
+      <div class="metric"><div class="metric-val">3</div><div class="metric-lbl">Темы</div></div>
+      <div class="metric"><div class="metric-val">42</div><div class="metric-lbl">Реплики</div></div>
+    </div>
+    <div class="player">
+      <div class="play-btn">
+        <svg width="10" height="12" viewBox="0 0 10 12" fill="var(--color-text-primary)"><path d="M1 1l8 5-8 5V1z"/></svg>
+      </div>
+      <div class="progress"><div class="progress-fill"></div></div>
+      <span class="time-lbl">1:35 / 4:32</span>
+    </div>
+    <hr class="divider">
+    <div style="display: flex; gap: 1.25rem; flex-wrap: wrap;">
+      <div style="flex: 1; min-width: 220px;">
+        <div class="section-title">Темы разговора</div>
+        <span class="tag">Возврат товара</span>
+        <span class="tag">Качество обслуживания</span>
+        <span class="tag">Компенсация</span>
+        <hr class="divider">
+        <div class="section-title">Саммари</div>
+        <div style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6;">Клиент обратился по поводу возврата бракованного товара. Оператор предложил компенсацию и оформил заявку на возврат. Клиент остался доволен решением.</div>
+      </div>
+      <div style="flex: 1.2; min-width: 260px;">
+        <div class="section-title">Транскрипция</div>
+        <div style="display: flex; flex-direction: column;">
+          <div style="margin-bottom: 8px;">
+            <div class="replica-label">Оператор · 0:03</div>
+            <div class="replica replica-op">Здравствуйте, меня зовут Алексей, чем могу помочь?</div>
+          </div>
+          <div style="margin-bottom: 8px; display: flex; flex-direction: column; align-items: flex-end;">
+            <div class="replica-label" style="text-align: right;">Клиент · 0:07</div>
+            <div class="replica replica-cl">Добрый день, хочу вернуть товар, он оказался бракованным.</div>
+          </div>
+          <div style="margin-bottom: 8px;">
+            <div class="replica-label">Оператор · 0:14</div>
+            <div class="replica replica-op">Понял вас, давайте я оформлю заявку на возврат прямо сейчас.</div>
+          </div>
+          <div style="text-align: center; padding: 8px 0;">
+            <span style="font-size: 12px; color: var(--color-text-tertiary);">· · · ещё 39 реплик · · ·</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const idx = ['login','list','upload','card'].indexOf(id);
+  document.querySelectorAll('.nav button')[idx].classList.add('active');
+}
+</script>

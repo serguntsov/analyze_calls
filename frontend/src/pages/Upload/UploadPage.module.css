@@ -1,0 +1,132 @@
+.page {
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.pageTitle {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin-bottom: 1rem;
+}
+
+.dropZone {
+  border: 1.5px dashed var(--color-border-secondary);
+  border-radius: var(--border-radius-lg);
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  background: var(--color-background-secondary);
+  margin-bottom: 1rem;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.dragging {
+  border-color: var(--color-text-primary);
+  background: var(--color-background-primary);
+}
+
+.hasFile {
+  border-style: solid;
+  border-color: var(--color-border-primary);
+}
+
+.uploadIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--border-radius-md);
+  border: 0.5px solid var(--color-border-secondary);
+  background: var(--color-background-primary);
+  margin: 0 auto 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dropTitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin-bottom: 4px;
+}
+
+.dropSub {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  margin-bottom: 12px;
+}
+
+.changeBtn {
+  background: none;
+  border: none;
+  font-size: 12px;
+  color: var(--color-text-info);
+  cursor: pointer;
+  margin-top: 4px;
+  font-family: var(--font-sans);
+}
+
+/* Progress bar */
+.progressWrap {
+  position: relative;
+  height: 4px;
+  background: var(--color-border-tertiary);
+  border-radius: 2px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.progressBar {
+  height: 100%;
+  background: var(--color-text-primary);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.progressLabel {
+  position: absolute;
+  right: 0;
+  top: -18px;
+  font-size: 11px;
+  color: var(--color-text-tertiary);
+}
+
+.divider {
+  border: none;
+  border-top: 0.5px solid var(--color-border-tertiary);
+  margin: 1rem 0;
+}
+
+.fieldRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.fieldLabel {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  min-width: 120px;
+}
+
+.fieldInput,
+.fieldSelect {
+  flex: 1;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.error {
+  font-size: 12px;
+  color: #c0392b;
+  margin-bottom: 10px;
+  padding: 6px 10px;
+  background: #fdf0ef;
+  border-radius: var(--border-radius-md);
+  border: 0.5px solid #e8b4b0;
+}

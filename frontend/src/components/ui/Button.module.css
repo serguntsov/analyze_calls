@@ -1,0 +1,35 @@
+.btn {
+  height: 36px;
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--border-radius-md);
+  background: var(--color-background-secondary);
+  padding: 0 16px;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: opacity 0.15s, background 0.15s;
+  white-space: nowrap;
+}
+
+.btn:hover {
+  opacity: 0.8;
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.primary {
+  background: var(--color-text-primary);
+  color: var(--color-background-primary);
+  border-color: transparent;
+}
+
+.primary:hover {
+  opacity: 0.85;
+}
