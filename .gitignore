@@ -166,3 +166,8 @@ cython_debug/
 /Data
 /redis_data
 **/.ruff_cache/
+
+# Backend
+backend/calls.db
+backend/uploads/
+frontend/.env.local
